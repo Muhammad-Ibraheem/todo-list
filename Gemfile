@@ -43,6 +43,9 @@ group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   # rspec-rails is a testing framework for Rails 5+.
   gem 'rspec-rails', '~> 5.0', '>= 5.0.2'
+  # Shoulda Matchers provides RSpec- and Minitest-compatible one-liners to test common Rails functionality that,
+  # if written by hand, would be much longer, more complex, and error-prone.
+  gem 'shoulda-matchers', '~> 5.1'
 end
 
 group :development do
