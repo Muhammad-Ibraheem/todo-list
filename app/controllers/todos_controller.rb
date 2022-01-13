@@ -1,45 +1,46 @@
-class TodosController < ApplicationController 
-    before_action :set_todo, only: [:update, :destroy, :show] 
+# frozen_string_literal: true
 
-    def index 
-        @todos = Todo.all
-        render json: @todos
-    end 
+class TodosController < ApplicationController
+  before_action :set_todo, only: %i[update destroy show]
 
-    def show 
-  render json: @todo
-    end
+  def index
+    @todos = Todo.all
+    render json: @todos
+  end
 
-def create 
-@todo = Todo.new(todo_params) 
-if @todo.save 
-    render json: @todo 
-else 
-    render json: @todo.errors, status: :unprocessable_entity
-end
-end
-
-def update 
-if @todo.update(todo_params)
+  def show
     render json: @todo
-else 
-    render json: @todo.errors,  status: :unprocessable_entity
-end 
-end 
+  end
 
-def destroy 
- @todo.destroy 
- render json: @todo
-end
-
-
-    private 
-
-    def set_todo 
-        @todo = Todo.find(params[:id])
-    end 
-
-    def todo_params
-params.require(:todo).permit(:id, :title, :done)
+  def create
+    @todo = Todo.new(todo_params)
+    if @todo.save
+      render json: @todo
+    else
+      render json: @todo.errors, status: :unprocessable_entity
     end
+  end
+
+  def update
+    if @todo.update(todo_params)
+      render json: @todo
+    else
+      render json: @todo.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @todo.destroy
+    render json: @todo
+  end
+
+  private
+
+  def set_todo
+    @todo = Todo.find(params[:id])
+  end
+
+  def todo_params
+    params.require(:todo).permit(:id, :title, :done)
+  end
 end
