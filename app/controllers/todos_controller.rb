@@ -14,9 +14,23 @@ def create
 @todo = Todo.new(todo_params) 
 if @todo.save 
     render json: @todo 
+else 
+    render json: @todo.errors, status: :unprocessable_entity
 end
 end
 
+def update 
+if @todo.update(todo_params)
+    render json: @todo
+else 
+    render json: @todo.errors,  status: :unprocessable_entity
+end 
+end 
+
+def destroy 
+ @todo.destroy 
+ render json: @todo
+end
 
 
     private 
