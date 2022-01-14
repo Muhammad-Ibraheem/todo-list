@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :todos
+  namespace :api do
+    namespace :v1 do
+      resources :todos
+    end
+  end
 end
