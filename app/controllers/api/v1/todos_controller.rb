@@ -3,7 +3,7 @@
 module Api
   module V1
     class TodosController < ApplicationController
-      before_action :set_todo, only: %i[update destroy]
+      before_action :set_todo, only: %i[update destroy show]
 
       def index
         @todos = Todo.all
@@ -17,6 +17,10 @@ module Api
         else
           render json: @todo.errors, status: :unprocessable_entity
         end
+      end
+
+      def show
+        render json: TodosRepresenter.new(@todo).as_json
       end
 
       def update
