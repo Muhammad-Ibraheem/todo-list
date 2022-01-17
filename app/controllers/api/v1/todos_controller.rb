@@ -43,7 +43,7 @@ module Api
       end
 
       def todo_params
-        params.permit(:title)
+        params.permit(:title, :user_id)
       end
     end
   end

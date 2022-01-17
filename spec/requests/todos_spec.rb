@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Todos', type: :request do
   # initialize test data
-  let!(:todos) { create_list(:todo, 5) }
+  let!(:todos) { create_list(:todo, 5, user: user) }
   let(:todo_id) { todos.first.id }
 
   # GET /todo
