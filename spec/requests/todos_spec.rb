@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Todos', type: :request do
   # initialize test data
+  let(:user) { create(:user) }
   let!(:todos) { create_list(:todo, 5, user: user) }
   let(:todo_id) { todos.first.id }
 
@@ -24,10 +25,12 @@ RSpec.describe 'Todos', type: :request do
   # POST /todo
 
   describe 'POST/todos' do
-    let(:valid_title) { { title: 'Movie' } }
+    let(:valid_attributes) do
+      { title: 'Movie', user_id: user.id }
+    end
 
     context 'when the request is valid' do
-      before { post '/api/v1/todos', params: valid_title }
+      before { post '/api/v1/todos', params: valid_attributes }
 
       it 'creates a todo' do
         expect(json['title']).to eq('Movie')
@@ -39,7 +42,8 @@ RSpec.describe 'Todos', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post '/api/v1/todos', params: { title: '' } }
+      let(:invalid_attributes) { { title: nil }.to_json }
+      before { post '/api/v1/todos', params: invalid_attributes }
 
       it 'returns a validations faliure message' do
         expect(response.body).to include('is too short (minimum is 3 characters)')

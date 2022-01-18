@@ -11,7 +11,7 @@ module Api
       end
 
       def create
-        @todo = Todo.create(todo_params)
+        @todo = Todo.new(todo_params)
         if @todo.save
           render json: TodoRepresenter.new(@todo).as_json, status: :created
         else
