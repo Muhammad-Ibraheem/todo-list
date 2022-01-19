@@ -56,3 +56,6 @@ group :development do
   # RuboCop is a Ruby code style checking gem
   gem 'rubocop', '~> 1.24', '>= 1.24.1'
 end
+
+# A pure ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard.
+gem 'jwt', '~> 2.3'

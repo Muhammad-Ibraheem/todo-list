@@ -11,7 +11,6 @@ RSpec.describe 'Todos', type: :request do
   # GET /todo
   describe 'GET /todos' do
     before { get '/api/v1/todos' }
-
     it 'returns todos' do
       expect(json).not_to be_empty
       expect(json.size).to eq(5)
