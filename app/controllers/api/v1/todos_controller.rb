@@ -6,12 +6,12 @@ module Api
       before_action :set_todo, only: %i[update destroy show]
 
       def index
-        @todos = Todo.all
+        @todos = current_user.todos
         render json: TodosRepresenter.new(@todos).as_json
       end
 
       def create
-        @todo = Todo.new(todo_params)
+        @todo = current_user.todos.create!(todo_params)
         if @todo.save
           render json: TodoRepresenter.new(@todo).as_json, status: :created
         else
@@ -43,7 +43,7 @@ module Api
       end
 
       def todo_params
-        params.permit(:title, :user_id)
+        params.permit(:title)
       end
     end
   end
