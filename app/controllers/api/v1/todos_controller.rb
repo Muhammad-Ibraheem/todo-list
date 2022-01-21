@@ -4,7 +4,6 @@ module Api
   module V1
     class TodosController < ApplicationController
       before_action :set_todo, only: %i[update destroy show]
-      require './lib/message'
 
       def index
         @todos = current_user.todos
@@ -12,7 +11,7 @@ module Api
       end
 
       def create
-        @todo = current_user.todos.create!(todo_params)
+        @todo = current_user.todos.new(todo_params)
         if @todo.save
           render json: TodoRepresenter.new(@todo).as_json, status: :created
         else

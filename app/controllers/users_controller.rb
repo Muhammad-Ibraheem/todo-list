@@ -2,7 +2,6 @@
 
 class UsersController < ApplicationController
   skip_before_action :authorize_request, only: :create
-  require './lib/message'
 
   def create
     user = User.create!(user_params)
