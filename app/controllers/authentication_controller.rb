@@ -8,6 +8,11 @@ class AuthenticationController < ApplicationController
     json_response(auth_token: auth_token)
   end
 
+  def destroy
+    @user = current_user
+    Rails.cache.write("InvalidJWTs-#{@user.id}", request.headers['Authorization'].split(' '), expires_in: 24.hours)
+  end
+
   private
 
   def auth_params
