@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :todo do
-    title { Faker::Quote.famous_last_words }
+    title { Faker::TvShows::BigBangTheory.character }
   end
 end

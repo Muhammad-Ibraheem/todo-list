@@ -4,13 +4,14 @@ require 'rails_helper'
 
 RSpec.describe 'Todos', type: :request do
   # initialize test data
-  let!(:todos) { create_list(:todo, 5) }
+  let(:user) { create(:user) }
+  let!(:todos) { create_list(:todo, 5, user: user) }
   let(:todo_id) { todos.first.id }
+  let(:headers) { valid_headers }
 
   # GET /todo
   describe 'GET /todos' do
-    before { get '/api/v1/todos' }
-
+    before { get '/api/v1/todos', params: {}, headers: headers }
     it 'returns todos' do
       expect(json).not_to be_empty
       expect(json.size).to eq(5)
@@ -24,10 +25,12 @@ RSpec.describe 'Todos', type: :request do
   # POST /todo
 
   describe 'POST/todos' do
-    let(:valid_title) { { title: 'Movie' } }
+    let(:valid_attributes) do
+      { title: 'Movie', user_id: user.id }.to_json
+    end
 
     context 'when the request is valid' do
-      before { post '/api/v1/todos', params: valid_title }
+      before { post '/api/v1/todos', params: valid_attributes, headers: headers }
 
       it 'creates a todo' do
         expect(json['title']).to eq('Movie')
@@ -39,7 +42,8 @@ RSpec.describe 'Todos', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post '/api/v1/todos', params: { title: '' } }
+      let(:invalid_attributes) { { title: nil }.to_json }
+      before { post '/api/v1/todos', params: invalid_attributes, headers: headers }
 
       it 'returns a validations faliure message' do
         expect(response.body).to include('is too short (minimum is 3 characters)')
@@ -50,7 +54,7 @@ RSpec.describe 'Todos', type: :request do
   # DELETE /todo/id
 
   describe 'DELETE/todos/:id' do
-    before { delete "/api/v1/todos/#{todo_id}" }
+    before { delete "/api/v1/todos/#{todo_id}", params: {}, headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)
