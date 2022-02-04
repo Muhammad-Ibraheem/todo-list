@@ -65,3 +65,6 @@ gem 'jwt', '~> 2.3'
 
 # Simple, efficient background processing for Ruby.
 gem 'sidekiq', '~> 6.4'
+
+# Clean ruby syntax for writing and deploying cron jobs.
+gem 'whenever', '~> 1.0', require: false
