@@ -12,14 +12,29 @@ namespace :todos_reminders do
       if last_reminder.nil?
         TodoRemindersJob.set(wait_until: reminder_time).perform_later(todo)
         todo.update(last_reminder_sent_at: DateTime.now)
-      elsif frequency == 'daily'
-        TodoRemindersJob.set(wait_until: reminder_time).perform_later(todo) if last_reminder + 24.hours
-      elsif frequency == 'weekly'
-        TodoRemindersJob.set(wait_until: reminder_time).perform_later(todo) if last_reminder + 7.days
-      elsif frequency == 'biweekly'
-        TodoRemindersJob.set(wait_until: reminder_time).perform_later(todo) if last_reminder + 14.days
-      elsif frequency == 'monthly'
-        TodoRemindersJob.set(wait_until: reminder_time).perform_later(todo) if last_reminder + 30.days
+      end
+      case frequency
+      when 'daily'
+        if last_reminder + 2.minutes <= DateTime.now
+          binding
+          TodoRemindersJob.set(wait_until: reminder_time).perform_later(todo)
+          todo.update(last_reminder_sent_at: DateTime.now)
+        end
+      when 'weekly'
+        if last_reminder + 7.days <= DateTime.now
+          TodoRemindersJob.set(wait_until: reminder_time).perform_later(todo)
+          todo.update(last_reminder_sent_at: DateTime.now)
+        end
+      when 'biweekly'
+        if last_reminder + 14.days <= DateTime.now
+          TodoRemindersJob.set(wait_until: reminder_time).perform_later(todo)
+          todo.update(last_reminder_sent_at: DateTime.now)
+        end
+      when 'monthly'
+        if last_reminder + 30.days <= DateTime.now
+          TodoRemindersJob.set(wait_until: reminder_time).perform_later(todo)
+          todo.update(last_reminder_sent_at: DateTime.now)
+        end
       end
     end
   end

@@ -4,5 +4,5 @@ set :output, 'log/cron.log'
 set :environment, 'development'
 
 every 10.minutes do
-  rake 'todos_reminders:reminders'
+  rake todos_reminders: reminders
 end
