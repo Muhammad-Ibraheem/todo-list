@@ -10,7 +10,6 @@ class Todo < ApplicationRecord
   def eligible_for_next_reminder?
     last_reminder = last_reminder_sent_at
     return false if completed_at.present?
-    return true if last_reminder.nil?
 
     return true if last_reminder.present? && DateTime.now >= last_reminder
 
