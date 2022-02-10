@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_220_117_081_625) do
+ActiveRecord::Schema.define(version: 20_220_210_141_243) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -22,6 +22,10 @@ ActiveRecord::Schema.define(version: 20_220_117_081_625) do
     t.datetime 'updated_at', precision: 6, null: false
     t.integer 'user_id'
     t.datetime 'completed_at', precision: 6
+    t.time 'expected_completion_time'
+    t.datetime 'remind_at', precision: 6
+    t.string 'reminder_frequency'
+    t.datetime 'last_reminder_sent_at', precision: 6
   end
 
   create_table 'users', force: :cascade do |t|
