@@ -8,10 +8,9 @@ class Todo < ApplicationRecord
   scope :reminder_todos, -> { where.not(remind_at: nil) }
 
   def eligible_for_next_reminder?
-    last_reminder = last_reminder_sent_at
     return false if completed_at.present?
 
-    return true if last_reminder.present? && DateTime.now >= last_reminder
+    return true if last_reminder_sent_at.present? && DateTime.now >= last_reminder_sent_at
 
     case reminder_frequency
     when 'daily'
@@ -26,22 +25,18 @@ class Todo < ApplicationRecord
   end
 
   def one_day_passed?
-    last_reminder = last_reminder_sent_at
-    return true if DateTime.now >= last_reminder + 24.hours
+    DateTime.now >= last_reminder_sent_at + 1.day
   end
 
   def one_week_passed?
-    last_reminder = last_reminder_sent_at
-    return true if DateTime.now >= last_reminder + 7.days
+    DateTime.now >= last_reminder_sent_at + 1.week
   end
 
   def two_weeks_passed?
-    last_reminder = last_reminder_sent_at
-    return true if DateTime.now >= last_reminder + 14.days
+    DateTime.now >= last_reminder_sent_at + 2.weeks
   end
 
   def one_month_passed?
-    last_reminder = last_reminder_sent_at
-    return true if DateTime.now >= last_reminder + 30.days
+    DateTime.now >= last_reminder_sent_at + 1.month
   end
 end
