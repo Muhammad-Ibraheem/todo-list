@@ -3,6 +3,6 @@
 namespace :todos_reminders do
   desc 'reminders for todos'
   task reminders: :environment do
-    TodoReminder.todos_reminders
+    TodoReminderService.call
   end
 end
