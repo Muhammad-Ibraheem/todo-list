@@ -43,7 +43,8 @@ module Api
       end
 
       def todo_params
-        params.permit(:title)
+        params.permit(:title, :remind_at, :completed_at, :reminder_frequency, :expected_completion_time,
+                      :last_reminder_sent_at)
       end
     end
   end
