@@ -7,12 +7,11 @@ class AuthenticateUser
   end
 
   def call
-<<<<<<< HEAD
-    @token = JsonWebToken.encode(user_id: user.id) if user
-    user.update(user_token: @token)
-=======
-    JsonWebToken.encode(user_id: user.id) if user
->>>>>>> main
+    if user
+      token = JsonWebToken.encode(user_id: user.id)
+      user.update(user_token: token)
+      token
+    end
   end
 
   private
