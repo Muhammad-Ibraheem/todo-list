@@ -10,17 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2022_02_10_162708) do
 
+=======
+ActiveRecord::Schema.define(version: 20_220_117_081_625) do
+>>>>>>> main
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+<<<<<<< HEAD
   create_table "todos", force: :cascade do |t|
     t.string "title", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
     t.datetime "completed_at", precision: 6
+=======
+  create_table 'todos', force: :cascade do |t|
+    t.string 'title', null: false
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.integer 'user_id'
+    t.datetime 'completed_at', precision: 6
+  end
+
+  create_table 'users', force: :cascade do |t|
+    t.string 'username', null: false
+    t.string 'password_digest'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['username'], name: 'index_users_on_username', unique: true
+>>>>>>> main
   end
 
   create_table "users", force: :cascade do |t|
