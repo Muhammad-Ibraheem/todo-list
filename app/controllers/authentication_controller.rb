@@ -3,6 +3,7 @@
 class AuthenticationController < ApplicationController
   skip_before_action :authorize_request, only: :authenticate
 
+
   def authenticate
     auth_token = AuthenticateUser.new(auth_params[:username], auth_params[:password]).call
     json_response(auth_token: auth_token)
@@ -10,7 +11,7 @@ class AuthenticationController < ApplicationController
 
   def destroy
     @user = current_user
-    Rails.cache.write("InvalidJWTs-#{@user.id}", request.headers['Authorization'].split(' '), expires_in: 24.hours)
+    @user.update(user_token: nil) if @user.present?
   end
 
   private
