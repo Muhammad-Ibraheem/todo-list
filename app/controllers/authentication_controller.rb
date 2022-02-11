@@ -9,8 +9,7 @@ class AuthenticationController < ApplicationController
   end
 
   def destroy
-    @user = current_user
-    @user.update(user_token: nil) if @user.present?
+    current_user.update(user_token: nil)
   end
 
   private
