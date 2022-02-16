@@ -36,5 +36,17 @@ RSpec.describe 'Authentications', type: :request do
         expect(json['message']).to match(/Invalid credentials/)
       end
     end
+
+    describe 'DELETE/auth/signout' do
+      let(:user) { create(:user) }
+      context 'logout user' do
+        before do
+          @user = User.new(username: 'username', password: 'password')
+        end
+        it 'should logout the user' do
+          expect(response).to be_nil
+        end
+      end
+    end
   end
 end

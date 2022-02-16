@@ -4,7 +4,8 @@ require 'rails_helper'
 
 RSpec.describe ApplicationController, type: :controller do
   let!(:user) { create(:user) }
-  let(:headers) { { 'Authorization' => token_generator(user.id) } }
+  let!(:user_token) { token_generator(user.id) }
+  let(:headers) { { 'Authorization' => user_token } }
   let(:invalid_headers) { { 'Authorization' => nil } }
 
   describe '#authorize_request' do
@@ -13,6 +14,7 @@ RSpec.describe ApplicationController, type: :controller do
 
       # private method authorize_request returns current user
       it 'sets the current user' do
+        user.update user_token: user_token
         expect(subject.instance_eval { authorize_request }).to eq(user)
       end
     end
