@@ -39,12 +39,16 @@ RSpec.describe 'Authentications', type: :request do
 
     describe 'DELETE/auth/signout' do
       let(:user) { create(:user) }
+      let!(:user_token) { token_generator(user.id) }
+      let!(:headers) { { 'Authorization' => user_token } }
+
       context 'logout user' do
         before do
-          @user = User.new(username: 'username', password: 'password')
+          delete '/auth/signout', headers: headers
         end
-        it 'should logout the user' do
-          expect(response).to be_nil
+
+        it 'returns a nil authentication token' do
+          expect(json['auth_token']).to be_nil
         end
       end
     end
