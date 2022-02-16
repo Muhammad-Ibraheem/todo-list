@@ -44,11 +44,12 @@ RSpec.describe 'Authentications', type: :request do
 
       context 'logout user' do
         before do
+          user.update(user_token: user_token)
           delete '/auth/signout', headers: headers
         end
 
         it 'returns a nil authentication token' do
-          expect(json['auth_token']).to be_nil
+          expect(user.reload.user_token).to be_nil
         end
       end
     end
