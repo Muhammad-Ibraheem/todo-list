@@ -19,10 +19,7 @@ class AuthorizeApiRequest
   def user
     @user ||= User.find_by!(user_token: http_auth_header)
   rescue ActiveRecord::RecordNotFound => e
-    raise(
-      ExceptionHandler::InvalidToken,
-      (Message.invalid_token.to_s)
-    )
+    raise(ExceptionHandler::InvalidToken, Message.invalid_token.to_s)
   end
 
   def decoded_auth_token

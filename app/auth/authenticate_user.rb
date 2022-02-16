@@ -10,7 +10,7 @@ class AuthenticateUser
     if user
       token = JsonWebToken.encode(user_id: user.id)
       user.update(user_token: token)
-      token
+
     end
   end
 

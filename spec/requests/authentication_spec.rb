@@ -36,5 +36,22 @@ RSpec.describe 'Authentications', type: :request do
         expect(json['message']).to match(/Invalid credentials/)
       end
     end
+
+    describe 'DELETE/auth/signout' do
+      let(:user) { create(:user) }
+      let!(:user_token) { token_generator(user.id) }
+      let!(:headers) { { 'Authorization' => user_token } }
+
+      context 'logout user' do
+        before do
+          user.update(user_token: user_token)
+          delete '/auth/signout', headers: headers
+        end
+
+        it 'returns a nil authentication token' do
+          expect(user.reload.user_token).to be_nil
+        end
+      end
+    end
   end
 end

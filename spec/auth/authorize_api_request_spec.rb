@@ -3,14 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe AuthorizeApiRequest do
-  let(:user) { create(:user) }
-  let(:header) { { 'Authorization' => token_generator(user.id) } }
+  let!(:user) { create(:user) }
+  let!(:user_token) { token_generator(user.id) }
+  let(:header) { { 'Authorization' => user_token } }
   subject(:invalid_request_obj) { described_class.new({}) }
   subject(:request_obj) { described_class.new(header) }
 
   describe 'call' do
     context 'when valid request' do
       it 'returns user object' do
+        user.update user_token: user_token
         result = request_obj.call
         expect(result[:user]).to eq(user)
       end
@@ -31,7 +33,7 @@ RSpec.describe AuthorizeApiRequest do
 
         it 'raises an InvalidToken error' do
           expect { invalid_request_obj.call }
-            .to raise_error(ExceptionHandler::InvalidToken, /Invalid token/)
+            .to raise_error(ExceptionHandler::InvalidToken)
         end
       end
 
@@ -40,11 +42,7 @@ RSpec.describe AuthorizeApiRequest do
         subject(:request_obj) { described_class.new(header) }
 
         it 'raises ExceptionHandler::ExpiredSignature error' do
-          expect { request_obj.call }
-            .to raise_error(
-              ExceptionHandler::InvalidToken,
-              /Signature has expired/
-            )
+          expect { request_obj.call }.to raise_error(ExceptionHandler::InvalidToken)
         end
       end
 
@@ -53,11 +51,7 @@ RSpec.describe AuthorizeApiRequest do
         subject(:invalid_request_obj) { described_class.new(header) }
 
         it 'handles JWT::DecodeError' do
-          expect { invalid_request_obj.call }
-            .to raise_error(
-              ExceptionHandler::InvalidToken,
-              /Not enough or too many segments/
-            )
+          expect { invalid_request_obj.call }.to raise_error(ExceptionHandler::InvalidToken)
         end
       end
     end
