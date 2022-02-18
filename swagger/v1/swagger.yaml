@@ -1,0 +1,90 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/todos":
+    post:
+      summary: Create  todo
+      tags:
+      - Todo
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '201':
+          description: todo created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                completed_at:
+                  type: string
+                  format: datetime
+                expected_completion_time:
+                  type: string
+                  format: time
+                remind_at:
+                  type: string
+                  format: datetime
+                reminder_frequency:
+                  type: string
+                last_reminder_sent_at:
+                  type: string
+                  format: datetime
+              required:
+              - title
+  "/api/v1/todos/:id":
+    get:
+      summary: Get todo
+      tags:
+      - todos
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: todos found
+        '404':
+          description: blog not found
+  api/v1/todos/:id:
+    delete:
+      summary: delete todo
+      tags:
+      - todo
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: todo deleted
+        '404':
+          description: not_found
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
