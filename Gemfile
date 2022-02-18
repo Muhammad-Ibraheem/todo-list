@@ -68,3 +68,6 @@ gem 'sidekiq', '~> 6.4'
 
 # Clean ruby syntax for writing and deploying cron jobs.
 gem 'whenever', '~> 1.0', require: false
+
+# swagger documentation
+gem 'rswag', '~> 2.5', '>= 2.5.1'
