@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :todos
-      resources :authentication
+      resources :authentication do
+        post 'authenticate', :on => :collection
+      end
     end
   end
 end

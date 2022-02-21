@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class TodosController < ApplicationController
+    class Api::V1::TodosController < ApplicationController
       before_action :set_todo, only: %i[update destroy show]
 
       def index

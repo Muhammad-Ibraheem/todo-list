@@ -4,16 +4,12 @@ info:
   title: API V1
   version: v1
 paths:
-  api/v1/authentication:
+  "/api/v1/authentication/authenticate":
     post:
       summary: login user
       tags:
       - user signin
-      parameters:
-      - name: Authorization
-        in: header
-        schema:
-          type: string
+      parameters: []
       responses:
         '201':
           description: user logged in
@@ -32,7 +28,7 @@ paths:
               required:
               - username
               - password
-  api/v1/todos:
+  "/api/v1/todos":
     delete:
       summary: user logged out
       tags:
@@ -47,7 +43,6 @@ paths:
           description: returns a nil authentication token
         '422':
           description: invalid request
-  "/api/v1/todos":
     post:
       summary: Create  todo
       tags:

@@ -3,11 +3,10 @@
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/authentication', type: :request do
-  path 'api/v1/authentication' do
+  path '/api/v1/authentication/authenticate' do
     post 'login user' do
       tags 'user signin'
       consumes 'application/json'
-      parameter name: 'Authorization', in: :header, type: :string
       parameter name: :user, in: :body,
                 schema: {
                   type: :object,
@@ -28,7 +27,7 @@ RSpec.describe 'api/v1/authentication', type: :request do
     end
   end
 
-  path 'api/v1/todos' do
+  path '/api/v1/todos' do
     delete 'user logged out' do
       tags 'user logged out'
       produces 'application/json'
