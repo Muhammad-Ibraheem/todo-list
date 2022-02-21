@@ -4,6 +4,49 @@ info:
   title: API V1
   version: v1
 paths:
+  api/v1/authentication:
+    post:
+      summary: login user
+      tags:
+      - user signin
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '201':
+          description: user logged in
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+              required:
+              - username
+              - password
+  api/v1/todos:
+    delete:
+      summary: user logged out
+      tags:
+      - user logged out
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '204':
+          description: returns a nil authentication token
+        '422':
+          description: invalid request
   "/api/v1/todos":
     post:
       summary: Create  todo
